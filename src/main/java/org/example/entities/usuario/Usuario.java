@@ -8,14 +8,24 @@ public class Usuario {
     private String email;
     private String senha;
     private Integer pontos;
+    private Long empresaId;
 
 
-    public Usuario(Long id, String nome, String email, String senha, Integer pontos) {
+    public Usuario(Long id, String nome, String email, String senha, Integer pontos, Long empresaId) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.pontos = pontos;
+        this.empresaId = empresaId;
+    }
+
+    public Long getEmpresaId() {
+        return empresaId;
+    }
+
+    public void setEmpresaId(Long empresaId) {
+        this.empresaId = empresaId;
     }
 
     public String getNome() {

@@ -1,7 +1,4 @@
-package org.example.dao.usuariodao.tarefadao;
-
-import org.example.dao.usuariodao.UsuarioDao;
-import org.example.dao.usuariodao.UsuarioDaoImpl;
+package org.example.dao.tarefadao;
 
 public class TarefaDaoFactory {
     private TarefaDaoFactory() {

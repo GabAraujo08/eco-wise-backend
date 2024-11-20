@@ -1,9 +1,8 @@
-package org.example.dao.usuariodao.tarefadao;
+package org.example.dao.tarefadao;
 
 import oracle.jdbc.internal.OracleTypes;
 import org.example.config.DatabaseConnectionFactory;
 import org.example.entities.tarefa.Tarefa;
-import org.example.entities.usuario.Usuario;
 import org.example.exceptions.tarefa.TarefaNotFoundException;
 import org.example.exceptions.tarefa.TarefaNotSavedException;
 
@@ -11,8 +10,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
-import static org.example.config.DatabaseConnectionImpl.connection;
 
 public class TarefaDaoImpl implements TarefaDao {
 
@@ -68,7 +65,7 @@ public class TarefaDaoImpl implements TarefaDao {
     @Override
     public List<Tarefa> readAll() {
         final List<Tarefa> all = new ArrayList<>();
-        final String sql = "SELECT * FROM TERAFA";
+        final String sql = "SELECT * FROM TAREFA";
 
         try (Connection conn = DatabaseConnectionFactory.create().get()) {
             //System.out.println("Conexão estabelecida com sucesso.");

@@ -26,34 +26,36 @@ public class UsuarioDaoImpl implements UsuarioDao {
      */
     @Override
     public Usuario create(Usuario usuario, Connection connection) throws SQLException, UsuarioNotSavedException {
-        final String sql = "BEGIN INSERT INTO USUARIO (nome, email, senha, pontos) "
-                + "VALUES (?, ?, ?, ?) RETURNING id_usuario INTO ?; END;";
+        final String sql = "BEGIN INSERT INTO USUARIO (nm_usuario, email, senha_usuario, pontos, fk_id_empresa) "
+                + "VALUES (?, ?, ?, ?, ?) RETURNING id_usuario INTO ?; END;";
         CallableStatement call = connection.prepareCall(sql);
 
         try {
-
+            // Configurando os parâmetros da consulta
             call.setString(1, usuario.getNome());
             call.setString(2, usuario.getEmail());
             call.setString(3, usuario.getSenha());
             call.setInt(4, usuario.getPontos() != null ? usuario.getPontos() : 0);
-            call.registerOutParameter(5, OracleTypes.NUMBER);
+            call.setLong(5, usuario.getEmpresaId()); // ID da empresa (FK)
+            call.registerOutParameter(6, OracleTypes.NUMBER); // ID gerado
 
-
+            // Executando a consulta
             int linhasAlteradas = call.executeUpdate();
-            long id = call.getLong(5);
+            long id = call.getLong(6); // Recupera o ID gerado
 
-
+            // Verificando se a inserção foi bem-sucedida
             if (linhasAlteradas == 0 || id == 0) {
                 throw new UsuarioNotSavedException();
             }
 
-
+            // Configurando o ID gerado no objeto de retorno
             usuario.setId(id);
             return usuario;
         } finally {
-            call.close(); //
+            call.close(); // Fecha o CallableStatement
         }
     }
+
 
 
 
@@ -79,13 +81,14 @@ public class UsuarioDaoImpl implements UsuarioDao {
             while (resultSet.next()) {
                 // Obtém os valores da tabela para criar o usuário
                 Long id = resultSet.getLong("id_usuario");
-                String nome = resultSet.getString("nome");
+                String nome = resultSet.getString("nm_usuario");
                 String email = resultSet.getString("email");
-                String senha = resultSet.getString("senha");
+                String senha = resultSet.getString("senha_usuario");
                 int pontos = resultSet.getInt("pontos");
+                Long empresaId = resultSet.getLong("id_empresa");
 
                 // Cria o objeto Usuario com os dados recuperados
-                Usuario usuario = new Usuario(id, nome, email, senha, pontos);
+                Usuario usuario = new Usuario(id, nome, email, senha, pontos, empresaId);
 
 
                 System.out.println("Usuário encontrado: " + nome);
@@ -107,7 +110,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
      */
     @Override
     public Usuario update(Usuario usuario, Connection connection) throws UsuarioNotFoundException, SQLException {
-        final String sqlUpdate = "UPDATE USUARIO SET nome = ?, email = ?, senha = ?, pontos = ? WHERE id_usuario = ?";
+        final String sqlUpdate = "UPDATE USUARIO SET nm_usuario = ?, email = ?, senha_usuario = ?, pontos = ?, id_empresa = ? WHERE id_usuario = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sqlUpdate)) {
             pstmt.setString(1, usuario.getNome());
@@ -115,6 +118,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
             pstmt.setString(3, usuario.getSenha());
             pstmt.setInt(4, usuario.getPontos());
             pstmt.setLong(5, usuario.getId());
+            pstmt.setLong(6, usuario.getEmpresaId());
 
             int linhasAlteradas = pstmt.executeUpdate();
 

@@ -7,10 +7,20 @@ public class UsuarioDto {
     private String email;
     private String senha;
     private Integer pontos;
+    private Long empresaId;
+
 
 
 
     public UsuarioDto() {
+    }
+
+    public Long getEmpresaId() {
+        return empresaId;
+    }
+
+    public void setEmpresaId(Long empresaId) {
+        this.empresaId = empresaId;
     }
 
     public Long getId() {

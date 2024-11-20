@@ -1,14 +1,11 @@
 package org.example.service.tarefa;
 
 import org.example.config.DatabaseConnectionFactory;
-import org.example.dao.usuariodao.UsuarioDao;
-import org.example.dao.usuariodao.UsuarioDaoFactory;
-import org.example.dao.usuariodao.tarefadao.TarefaDao;
-import org.example.dao.usuariodao.tarefadao.TarefaDaoFactory;
+import org.example.dao.tarefadao.TarefaDao;
+import org.example.dao.tarefadao.TarefaDaoFactory;
 import org.example.entities.tarefa.Tarefa;
 import org.example.exceptions.tarefa.TarefaNotFoundException;
 import org.example.exceptions.tarefa.TarefaNotSavedException;
-import org.example.exceptions.usuario.UsuarioNotSavedException;
 
 import java.sql.Connection;
 import java.sql.SQLException;

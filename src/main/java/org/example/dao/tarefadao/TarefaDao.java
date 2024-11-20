@@ -1,11 +1,8 @@
-package org.example.dao.usuariodao.tarefadao;
+package org.example.dao.tarefadao;
 
 import org.example.entities.tarefa.Tarefa;
-import org.example.entities.usuario.Usuario;
 import org.example.exceptions.tarefa.TarefaNotFoundException;
 import org.example.exceptions.tarefa.TarefaNotSavedException;
-import org.example.exceptions.usuario.UsuarioNotFoundException;
-import org.example.exceptions.usuario.UsuarioNotSavedException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
