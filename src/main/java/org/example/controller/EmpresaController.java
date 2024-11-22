@@ -52,12 +52,13 @@ public class EmpresaController {
     @Path("")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+
     public Response add(EmpresaDto input) {
         if (input.getId() == null) {
             try {
                 // Criando empresa com os dados de EmpresaDto
                 Empresa empresa = new Empresa(null, input.getNome(), input.getCnpj(), input.getSenha());
-
+                System.out.println("Recebido: " + input);
                 // Chamando o service para salvar empresa
                 Empresa empresaSalva = this.empresaService.create(empresa);
 

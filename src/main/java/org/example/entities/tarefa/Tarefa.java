@@ -12,7 +12,9 @@ public class Tarefa {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.pontos = pontos;
+
+            this.pontos = pontos;
+
 
     }
 
@@ -45,8 +47,11 @@ public class Tarefa {
     }
 
     public void setPontos(Integer pontos) {
-        this.pontos = pontos;
+
+            this.pontos = pontos;
+
     }
+
 
 
 }

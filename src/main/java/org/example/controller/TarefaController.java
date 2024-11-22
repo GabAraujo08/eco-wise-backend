@@ -1,7 +1,12 @@
 package org.example.controller;
 
+import org.example.dao.empresadao.EmpresaDao;
+import org.example.dao.empresadao.EmpresaDaoFactory;
+import org.example.dao.tarefadao.TarefaDao;
+import org.example.dao.tarefadao.TarefaDaoFactory;
 import org.example.dtos.TarefaDto;
 import org.example.dtos.UsuarioDto;
+import org.example.entities.empresa.Empresa;
 import org.example.entities.tarefa.Tarefa;
 import org.example.entities.usuario.Usuario;
 import org.example.exceptions.tarefa.TarefaNotSavedException;
@@ -15,6 +20,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 @Path("/tarefa")
@@ -66,6 +72,22 @@ public class TarefaController {
                     .entity(Map.of("mensagem", "Este método permite apenas a criação de novas tarefas, sem ID especificado."))
                     .build();
         }
+    }
+
+    @GET
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findAll() {
+        TarefaDao tarefaDao = TarefaDaoFactory.create();
+        List<Tarefa> tarefas = tarefaDao.readAll();
+
+        if (tarefas.isEmpty()) {
+            return Response.status(Response.Status.NO_CONTENT).build(); // Retorna 204 se não houver tarefas
+        }
+
+        return Response.status(Response.Status.OK)
+                .entity(tarefas) // Modificado para retornar a lista de tarefas obtida
+                .build();
     }
 
 

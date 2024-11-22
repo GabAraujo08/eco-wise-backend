@@ -85,7 +85,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha_usuario");
                 int pontos = resultSet.getInt("pontos");
-                Long empresaId = resultSet.getLong("id_empresa");
+                Long empresaId = resultSet.getLong("fk_id_empresa");
 
                 // Cria o objeto Usuario com os dados recuperados
                 Usuario usuario = new Usuario(id, nome, email, senha, pontos, empresaId);

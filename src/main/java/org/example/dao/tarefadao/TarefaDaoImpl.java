@@ -68,34 +68,34 @@ public class TarefaDaoImpl implements TarefaDao {
         final String sql = "SELECT * FROM TAREFA";
 
         try (Connection conn = DatabaseConnectionFactory.create().get()) {
-            //System.out.println("Conexão estabelecida com sucesso.");
-
-            String databaseUser = conn.getMetaData().getUserName();
-            //System.out.println("Usuário do banco de dados: " + databaseUser);
+            System.out.println("Conexão estabelecida com sucesso.");
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet resultSet = stmt.executeQuery();
 
+            int count = 0;  // Contador de tarefas encontradas
             while (resultSet.next()) {
-                // Obtém os valores da tabela para criar o usuário
                 Long id = resultSet.getLong("id_tarefa");
                 String nome = resultSet.getString("nome_tarefa");
                 String descricao = resultSet.getString("descricao");
                 Integer pontos = resultSet.getInt("pontos");
 
-                // Cria o objeto Usuario com os dados recuperados
                 Tarefa tarefa = new Tarefa(id, nome, descricao, pontos);
-
-
-
                 all.add(tarefa);
+
+                // Log para verificar as tarefas
+                System.out.println("Tarefa #" + (++count) + ": " + tarefa.getNome());
             }
+
+            System.out.println("Total de tarefas encontradas: " + count);
         } catch (SQLException e) {
-            logger.warning("Não foi possível localizar nenhum registro de tarefa: " + e.getMessage());
+            logger.warning("Erro ao buscar tarefas: " + e.getMessage());
         }
-        //System.out.println("Total de usuários encontrados: " + all.size());
+
         return all;
     }
+
+
 
 
     @Override

@@ -15,7 +15,11 @@ public class Usuario {
         this.id = id;
         this.nome = nome;
         this.email = email;
-        this.senha = senha;
+        if (verificaSenha(senha)) {
+            this.senha = senha;
+        }else{
+            throw new IllegalArgumentException("Senha inválida");
+        }
         this.pontos = pontos;
         this.empresaId = empresaId;
     }
@@ -57,7 +61,11 @@ public class Usuario {
     }
 
     public void setSenha(String senha) {
-        this.senha = senha;
+        if (verificaSenha(senha)) {
+            this.senha = senha;
+        }else {
+            throw new IllegalArgumentException("Senha inválida");
+        }
     }
 
     public Integer getPontos() {
@@ -68,5 +76,7 @@ public class Usuario {
         this.pontos = pontos;
     }
 
-
+    private Boolean verificaSenha(String senha){
+        return this.senha.length() >= 8;
+    }
 }

@@ -52,7 +52,7 @@ public class UsuarioDto {
     }
 
     public void setSenha(String senha) {
-        this.senha = senha;
+
     }
 
     public Integer getPontos() {
